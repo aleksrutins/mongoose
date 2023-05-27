@@ -2,7 +2,9 @@ mongoose_sources = [
   'main.cpp',
 ]
 
+boost_dep = dependency('boost')
 mongoose_deps = [
+  boost_dep
 ]
 
 subdir('Mongoose')

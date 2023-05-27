@@ -1,5 +1,5 @@
 namespace Mongoose {
     class Parser {
 
-    }
+    };
 }
