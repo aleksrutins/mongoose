@@ -1,0 +1,5 @@
+namespace Mongoose {
+    class Parser {
+
+    }
+}
