@@ -1,6 +1,5 @@
-mongoose_sources = [
-  'main.cpp',
-]
+mongoose_sources = files(
+)
 
 boost_dep = dependency('boost')
 mongoose_deps = [
@@ -9,7 +8,7 @@ mongoose_deps = [
 
 subdir('Mongoose')
 
-executable('mongoose', mongoose_sources,
+executable('mongoose', mongoose_sources + 'main.cpp',
   dependencies: mongoose_deps,
   include_directories: include_directories('.'),
   install: true,

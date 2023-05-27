@@ -8,5 +8,5 @@ quoted_string<Iterator>::quoted_string() : quoted_string<Iterator>::base_type(st
     using qi::lexeme;
     using qi::char_;
 
-    start %= lexeme['"' >> *(char_ - '"') >> '"'];
+    start %= lexeme['"' >> *(char_ - (!'\\' >> '"')) >> '"'];
 }
