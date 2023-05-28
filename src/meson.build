@@ -1,16 +1,32 @@
-mongoose_sources = files(
+flex = find_program('flex')
+bison = find_program('bison')
+
+lgen = generator(
+  flex,
+  output: '@PLAINNAME@.yy.c',
+  arguments: ['-o', '@OUTPUT@', '@INPUT@']
 )
 
-boost_dep = dependency('boost')
+pgen = generator(
+  bison,
+  output: ['@BASENAME@.tab.c', '@BASENAME@.tab.h'],
+  arguments: ['@INPUT@', '--defines=@OUTPUT1@', '--output=@OUTPUT0@']
+)
+
+lfiles = lgen.process('lexer.l')
+pfiles = pgen.process('parser.y')
+
+mongoose_sources = files()
+
 mongoose_deps = [
-  boost_dep
+  glib_dep
 ]
 
-subdir('Mongoose')
+mongoose_lib = static_library('mongoose', mongoose_sources, lfiles, pfiles, dependencies: mongoose_deps)
+mongoose_lib_dep = declare_dependency(link_with: mongoose_lib)
 
-executable('mongoose', mongoose_sources + 'main.cpp',
-  dependencies: mongoose_deps,
-  include_directories: include_directories('.'),
+executable('mongoose', 'main.c',
+  dependencies: mongoose_deps + [mongoose_lib_dep],
   install: true,
 )
 

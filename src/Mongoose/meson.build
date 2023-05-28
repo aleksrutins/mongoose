@@ -1,1 +1,0 @@
-mongoose_sources += files('Parser.cpp')
